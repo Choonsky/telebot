@@ -25,8 +25,8 @@ spring:
     #  maximum-pool-size: 10
     url: jdbc:h2:mem:test_db
     driver-class-name: org.h2.Driver
-  jpa:
-    database-platform: PostgreSQL95Dialect
+  #jpa:
+  #  database-platform: PostgreSQL95Dialect
 
 telegrambot:
   userName: Choo1bot
