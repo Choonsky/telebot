@@ -7,8 +7,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.*;
-//import jakarta.validation.constraints.NotNull;
-//import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -22,11 +22,11 @@ public class Event {
     private int eventId;
 
     @Column(name = "time")
-    //@NotNull(message = "Need date!")
+    @NotNull(message = "Need date!")
     private Date date;
 
     @Column(name = "description")
-    //@Size(min = 4, max = 200, message = "Description must be between 0 and 200 chars!")
+    @Size(min = 4, max = 200, message = "Description must be between 0 and 200 chars!")
     private String description;
 
     @Column(name = "event_freq", columnDefinition = "TIME")
@@ -42,10 +42,10 @@ public class Event {
     }
 
     public Event(int eventId,
-                 //@NotNull(message = "Need date!")
+                 @NotNull(message = "Need date!")
                  Date date,
-                 //@Size(min = 4, max = 200, message = "Description must be between 0 and 200 chars!")
-                         String description,
+                 @Size(min = 4, max = 200, message = "Description must be between 0 and 200 chars!")
+                 String description,
                  EventFreq freq, User user) {
         this.eventId = eventId;
         this.date = date;
