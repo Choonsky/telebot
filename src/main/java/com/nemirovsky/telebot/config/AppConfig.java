@@ -1,12 +1,12 @@
 package com.nemirovsky.telebot.config;
 
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 import com.nemirovsky.telebot.botconfig.TelegramBotConfig;
 import com.nemirovsky.telebot.model.TelegramBot;
 import com.nemirovsky.telebot.model.TelegramFacade;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 
 
 @Configuration

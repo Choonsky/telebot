@@ -1,9 +1,9 @@
 package com.nemirovsky.telebot.cache;
 
+import com.nemirovsky.telebot.entity.Event;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
-import com.nemirovsky.telebot.entity.Event;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class EventCache {
 
     private final Map<Long, Event> eventMap = new HashMap<>();
 
-    public void saveEventCash(long userId, Event event) {
+    public void saveEventCache(long userId, Event event) {
         eventMap.put(userId, event);
     }
 }

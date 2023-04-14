@@ -1,5 +1,7 @@
 package com.nemirovsky.telebot.service;
 
+import com.nemirovsky.telebot.DAO.UserDAO;
+import com.nemirovsky.telebot.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import com.nemirovsky.telebot.DAO.UserDAO;
-import com.nemirovsky.telebot.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

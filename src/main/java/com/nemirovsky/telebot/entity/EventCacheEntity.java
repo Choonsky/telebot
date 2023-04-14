@@ -1,17 +1,17 @@
 package com.nemirovsky.telebot.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "event_cash")
+@Table(name = "event_cache")
 @Getter
 @Setter
 //serves to save unhandled events after rebooting heroku
-public class EventCashEntity {
+public class EventCacheEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +27,14 @@ public class EventCashEntity {
     @Column(name = "user_id")
     private long userId;
 
-    public EventCashEntity() {
+    public EventCacheEntity() {
     }
 
-    public static EventCashEntity eventTo(Date date, String description, long userId) {
-        EventCashEntity eventCashEntity = new EventCashEntity();
-        eventCashEntity.setDate(date);
-        eventCashEntity.setDescription(description);
-        eventCashEntity.setUserId(userId);
-        return eventCashEntity;
+    public static EventCacheEntity eventTo(Date date, String description, long userId) {
+        EventCacheEntity eventCacheEntity = new EventCacheEntity();
+        eventCacheEntity.setDate(date);
+        eventCacheEntity.setDescription(description);
+        eventCacheEntity.setUserId(userId);
+        return eventCacheEntity;
     }
 }

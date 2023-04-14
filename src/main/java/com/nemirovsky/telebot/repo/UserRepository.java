@@ -1,7 +1,7 @@
 package com.nemirovsky.telebot.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.nemirovsky.telebot.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

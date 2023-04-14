@@ -57,7 +57,7 @@ telegrambot:
   userName: @Choo1bot
   botToken: 710277744:AAHze1GFOc7yTxPjCWXrckQ-azKA7bYTW0Y
   webHookPath: https://34.30.224.192/
-  adminId: 39376213
+  adminId:
 
 eventservice:
   period: 600000

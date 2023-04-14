@@ -1,15 +1,15 @@
 package com.nemirovsky.telebot.service;
 
+import com.nemirovsky.telebot.DAO.EventCacheDAO;
+import com.nemirovsky.telebot.DAO.EventDAO;
+import com.nemirovsky.telebot.entity.Event;
+import com.nemirovsky.telebot.entity.EventCacheEntity;
+import com.nemirovsky.telebot.model.EventFreq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import com.nemirovsky.telebot.DAO.EventCashDAO;
-import com.nemirovsky.telebot.DAO.EventDAO;
-import com.nemirovsky.telebot.entity.Event;
-import com.nemirovsky.telebot.entity.EventCashEntity;
-import com.nemirovsky.telebot.model.EventFreq;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 @Service
 public class EventService {
     private final EventDAO eventDAO;
-    private final EventCashDAO eventCashDAO;
+    private final EventCacheDAO eventCacheDAO;
 
     @Autowired
-    public EventService(EventDAO eventDAO, EventCashDAO eventCashDAO) {
+    public EventService(EventDAO eventDAO, EventCacheDAO eventCacheDAO) {
         this.eventDAO = eventDAO;
-        this.eventCashDAO = eventCashDAO;
+        this.eventCacheDAO = eventCacheDAO;
     }
 
     //start service in 0:00 every day
@@ -55,7 +55,7 @@ public class EventService {
                         if (day == day1 && month == month1 && year == year1) {
                             eventDAO.remove(event);
                             return true;
-                        }else
+                        } else
                             return false;
                     case "EVERYDAY":
                         return true;
@@ -63,10 +63,11 @@ public class EventService {
                         return day == day1;
                     case "YEAR":
                         return day == day1 && month == month1;
-                    default: return false;
+                    default:
+                        return false;
                 }
             } else return false;
-        }).collect(Collectors.toList());
+        }).toList();
 
         for (Event event : list) {
             //set user event time
@@ -78,13 +79,14 @@ public class EventService {
             String userId = String.valueOf(event.getUser().getId());
 
             //save the event to the database in case the server reboots.
-            EventCashEntity eventCashEntity = EventCashEntity.eventTo(calendarUserTime.getTime(), event.getDescription(), event.getUser().getId());
-            eventCashDAO.save(eventCashEntity);
+            EventCacheEntity eventCacheEntity = EventCacheEntity.eventTo(calendarUserTime.getTime(),
+                    event.getDescription(), event.getUser().getId());
+            eventCacheDAO.save(eventCacheEntity);
 
             //create a thread for the upcoming event with the launch at a specific time
             SendEvent sendEvent = new SendEvent();
             sendEvent.setSendMessage(new SendMessage(userId, description));
-            sendEvent.setEventCashId(eventCashEntity.getId());
+            sendEvent.setEventCacheId(eventCacheEntity.getId());
 
             new Timer().schedule(new SimpleTask(sendEvent), calendarUserTime.getTime());
         }

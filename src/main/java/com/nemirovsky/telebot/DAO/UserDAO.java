@@ -1,9 +1,9 @@
 package com.nemirovsky.telebot.DAO;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.nemirovsky.telebot.entity.User;
 import com.nemirovsky.telebot.repo.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

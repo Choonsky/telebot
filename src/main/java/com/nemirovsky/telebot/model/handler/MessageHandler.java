@@ -1,15 +1,15 @@
 package com.nemirovsky.telebot.model.handler;
 
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import com.nemirovsky.telebot.DAO.UserDAO;
 import com.nemirovsky.telebot.cache.BotStateCache;
 import com.nemirovsky.telebot.cache.EventCache;
 import com.nemirovsky.telebot.entity.Event;
 import com.nemirovsky.telebot.model.BotState;
 import com.nemirovsky.telebot.service.MenuService;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 //processes incoming text message
@@ -18,14 +18,14 @@ public class MessageHandler {
     private final UserDAO userDAO;
     private final MenuService menuService;
     private final EventHandler eventHandler;
-    private final BotStateCache botStateCash;
+    private final BotStateCache botStateCache;
     private final EventCache eventCache;
 
-    public MessageHandler(UserDAO userDAO, MenuService menuService, EventHandler eventHandler, BotStateCache botStateCash, EventCache eventCache) {
+    public MessageHandler(UserDAO userDAO, MenuService menuService, EventHandler eventHandler, BotStateCache botStateCache, EventCache eventCache) {
         this.userDAO = userDAO;
         this.menuService = menuService;
         this.eventHandler = eventHandler;
-        this.botStateCash = botStateCash;
+        this.botStateCache = botStateCache;
         this.eventCache = eventCache;
     }
 
@@ -39,7 +39,7 @@ public class MessageHandler {
             return eventHandler.saveNewUser(message, userId, sendMessage);
         }
         //save state in to cache
-        botStateCash.saveBotState(userId, botState);
+        botStateCache.saveBotState(userId, botState);
         //if state =...
         switch (botState.name()) {
             case ("START"):
@@ -62,9 +62,9 @@ public class MessageHandler {
                 return eventHandler.enterDateHandler(message, userId);
             case ("CREATE"):
                 //start create event, set state to next step
-                botStateCash.saveBotState(userId, BotState.ENTERDESCRIPTION);
+                botStateCache.saveBotState(userId, BotState.ENTERDESCRIPTION);
                 //set new event to cache
-                eventCache.saveEventCash(userId, new Event());
+                eventCache.saveEventCache(userId, new Event());
                 sendMessage.setText("Введите описание события");
                 return sendMessage;
             case ("ENTERNUMBERFOREDIT"):

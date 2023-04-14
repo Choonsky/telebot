@@ -1,16 +1,15 @@
 package com.nemirovsky.telebot.service;
 
+import com.nemirovsky.telebot.DAO.EventCacheDAO;
+import com.nemirovsky.telebot.entity.EventCacheEntity;
+import com.nemirovsky.telebot.model.TelegramBot;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import com.nemirovsky.telebot.DAO.EventCashDAO;
-import com.nemirovsky.telebot.config.ApplicationContextProvider;
-import com.nemirovsky.telebot.entity.EventCashEntity;
-import com.nemirovsky.telebot.model.TelegramBot;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -18,15 +17,15 @@ import java.util.Timer;
 @Component
 public class SendEventFromCache {
 
-    private final EventCashDAO eventCashDAO;
+    private final EventCacheDAO eventCacheDAO;
     private final TelegramBot telegramBot;
 
     @Value("${telegrambot.adminId}")
     private int admin_id;
 
     @Autowired
-    public SendEventFromCache(EventCashDAO eventCashDAO, TelegramBot telegramBot) {
-        this.eventCashDAO = eventCashDAO;
+    public SendEventFromCache(EventCacheDAO eventCacheDAO, TelegramBot telegramBot) {
+        this.eventCacheDAO = eventCacheDAO;
         this.telegramBot = telegramBot;
     }
 
@@ -34,7 +33,7 @@ public class SendEventFromCache {
     @SneakyThrows
     //after every restart app  - check unspent events
     private void afterStart() {
-        List<EventCashEntity> list = eventCashDAO.findAllEventCash();
+        List<EventCacheEntity> list = eventCacheDAO.findAllEventCache();
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(admin_id));
@@ -42,12 +41,12 @@ public class SendEventFromCache {
         telegramBot.execute(sendMessage);
 
         if (!list.isEmpty()) {
-            for (EventCashEntity eventCashEntity : list) {
+            for (EventCacheEntity eventCacheEntity : list) {
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(eventCashEntity.getDate());
+                calendar.setTime(eventCacheEntity.getDate());
                 SendEvent sendEvent = new SendEvent();
-                sendEvent.setSendMessage(new SendMessage(String.valueOf(eventCashEntity.getUserId()), eventCashEntity.getDescription()));
-                sendEvent.setEventCashId(eventCashEntity.getId());
+                sendEvent.setSendMessage(new SendMessage(String.valueOf(eventCacheEntity.getUserId()), eventCacheEntity.getDescription()));
+                sendEvent.setEventCacheId(eventCacheEntity.getId());
                 new Timer().schedule(new SimpleTask(sendEvent), calendar.getTime());
             }
         }

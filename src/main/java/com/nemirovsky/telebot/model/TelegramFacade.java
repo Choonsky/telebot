@@ -1,5 +1,8 @@
 package com.nemirovsky.telebot.model;
 
+import com.nemirovsky.telebot.cache.BotStateCache;
+import com.nemirovsky.telebot.model.handler.CallbackQueryHandler;
+import com.nemirovsky.telebot.model.handler.MessageHandler;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,9 +11,6 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import com.nemirovsky.telebot.cache.BotStateCache;
-import com.nemirovsky.telebot.model.handler.CallbackQueryHandler;
-import com.nemirovsky.telebot.model.handler.MessageHandler;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -18,16 +18,16 @@ public class TelegramFacade {
 
     final MessageHandler messageHandler;
     final CallbackQueryHandler callbackQueryHandler;
-    final BotStateCache botStateCash;
+    final BotStateCache botStateCache;
 
     @Value("${telegrambot.adminId}")
     int adminId;
 
 
-    public TelegramFacade(MessageHandler messageHandler, CallbackQueryHandler callbackQueryHandler, BotStateCache botStateCash) {
+    public TelegramFacade(MessageHandler messageHandler, CallbackQueryHandler callbackQueryHandler, BotStateCache botStateCache) {
         this.messageHandler = messageHandler;
         this.callbackQueryHandler = callbackQueryHandler;
-        this.botStateCash = botStateCash;
+        this.botStateCache = botStateCache;
     }
 
     public BotApiMethod<?> handleUpdate(Update update) {
@@ -75,8 +75,8 @@ public class TelegramFacade {
                 else botState = BotState.START;
                 break;
             default:
-                botState = botStateCash.getBotStateMap().get(message.getFrom().getId()) == null?
-                        BotState.START: botStateCash.getBotStateMap().get(message.getFrom().getId());
+                botState = botStateCache.getBotStateMap().get(message.getFrom().getId()) == null?
+                        BotState.START: botStateCache.getBotStateMap().get(message.getFrom().getId());
         }
         //we pass the corresponding state to the handler
         //the corresponding method will be called
