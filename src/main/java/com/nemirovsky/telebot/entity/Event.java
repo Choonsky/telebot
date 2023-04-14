@@ -42,7 +42,8 @@ public class Event {
     }
 
     public Event(int eventId,
-                 //@NotNull(message = "Need date!") Date date,
+                 //@NotNull(message = "Need date!")
+                 Date date,
                  //@Size(min = 4, max = 200, message = "Description must be between 0 and 200 chars!")
                          String description,
                  EventFreq freq, User user) {
