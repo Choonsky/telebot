@@ -38,7 +38,7 @@ public class SendEventFromCache {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(admin_id));
         sendMessage.setText("Произошла перезагрузка!");
-        telegramBot.execute(sendMessage);
+        //telegramBot.execute(sendMessage);
 
         if (!list.isEmpty()) {
             for (EventCacheEntity eventCacheEntity : list) {
