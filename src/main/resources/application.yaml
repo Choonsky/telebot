@@ -1,0 +1,63 @@
+# Reactor Netty config (not Tomcat!)
+server:
+  port: 443
+  http2:
+    enabled: true
+  ssl:
+    key-store-type: PKCS12 # The format used for the keystore. It could be set to JKS in case it is a JKS file
+    key-store: classpath:keystore/lostfoundpets.p12 # The path to the keystore containing the certificate
+    key-store-password: 12345678 # The password used to generate the certificate
+    key-alias: lostfoundpets # The alias mapped to the certificate
+    enabled: true
+
+spring:
+  application:
+    name: lostfoundpets
+  webflux:
+    base-path: /
+  # data:
+    # mongodb:
+      #      authentication-database: admin
+      # uri: mongodb://localhost:27017/lostfoundpets
+      # uri: mongodb://DocumentDBAdmin:KrolikEst_1@docdb-2023-01-08-13-20-47.cluster-cuk3aks6r1zn.ap-northeast-1.docdb
+      #.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle
+      #.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+      # database: lostfoundpets
+  #      database: test
+
+  datasource:
+    url:
+    username:
+    password:
+
+  thymeleaf:
+    # enables the hot-reloading of the templates, when the spring-boot-devtools dependency is included
+    prefix: file:src/main/resources/templates/
+#  web:
+#    resources:
+#      static-locations: /META-INF/resources/, /resources/, /static/, /public/, /resources/templates/
+
+logging:
+  level:
+    io:
+      reflectoring: DEBUG
+    org:
+      springframework:
+        web: INFO
+        data:
+          mongodb:
+            core:
+              ReactiveMongoTemplate: DEBUG
+    reactor:
+      netty:
+        http:
+          client: DEBUG
+
+telegrambot:
+  userName: @Choo1bot
+  botToken: 710277744:AAHze1GFOc7yTxPjCWXrckQ-azKA7bYTW0Y
+  webHookPath: https://34.30.224.192/
+  adminId: 39376213
+
+eventservice:
+  period: 600000
