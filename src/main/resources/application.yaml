@@ -12,11 +12,17 @@ server:
 spring:
   application:
     name: telebot
+  cloud:
+    gcp:
+      sql:
+        instance-connection-name: braided-rush-383415:us-central1:postgres-01
+        database-name: telebot
 
   datasource:
-    url:
     username: postgres
     password: qwert12345
+    hikari:
+      maximum-pool-size: 10
 
 telegrambot:
   userName: @Choo1bot
