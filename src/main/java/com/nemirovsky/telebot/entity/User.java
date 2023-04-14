@@ -20,7 +20,8 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "time_zone", columnDefinition = "default 0")
+    //@Column(name = "time_zone", columnDefinition = "default 0")
+    @Column(name = "time_zone")
     //sets the broadcast time of events for your time zone
     private int timeZone;
 
