@@ -8,15 +8,15 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import com.nemirovsky.telebot.DAO.EventDAO;
 import com.nemirovsky.telebot.DAO.UserDAO;
-import com.nemirovsky.telebot.cash.BotStateCash;
-import com.nemirovsky.telebot.cash.EventCash;
+import com.nemirovsky.telebot.cache.BotStateCache;
+import com.nemirovsky.telebot.cache.EventCache;
 import com.nemirovsky.telebot.entity.Event;
 import com.nemirovsky.telebot.entity.User;
 import com.nemirovsky.telebot.model.BotState;
 import com.nemirovsky.telebot.model.EventFreq;
 import com.nemirovsky.telebot.service.MenuService;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,10 +28,10 @@ import java.util.List;
 public class EventHandler {
 
     //for save state bot
-    private final BotStateCash botStateCash;
+    private final BotStateCache botStateCash;
 
     //for saving stages of creating events
-    private final EventCash eventCash;
+    private final EventCache eventCache;
 
     private final UserDAO userDAO;
     private final EventDAO eventDAO;
@@ -41,9 +41,9 @@ public class EventHandler {
     private int admin_id;
 
     @Autowired
-    public EventHandler(BotStateCash botStateCash, EventCash eventCash, UserDAO userDAO, EventDAO eventDAO, MenuService menuService) {
+    public EventHandler(BotStateCache botStateCash, EventCache eventCache, UserDAO userDAO, EventDAO eventDAO, MenuService menuService) {
         this.botStateCash = botStateCash;
-        this.eventCash = eventCash;
+        this.eventCache = eventCache;
         this.userDAO = userDAO;
         this.eventDAO = eventDAO;
         this.menuService = menuService;
@@ -212,9 +212,9 @@ public class EventHandler {
             return sendMessage;
         }
         //get data of the previous set
-        Event event = eventCash.getEventMap().get(userId);
+        Event event = eventCache.getEventMap().get(userId);
         event.setDate(date);
-        eventCash.saveEventCash(userId, event);
+        eventCache.saveEventCash(userId, event);
         //event input is expected to complete, changes must be saved
         return editEvent(message.getChatId(), userId);
     }
@@ -231,10 +231,10 @@ public class EventHandler {
             return sendMessage;
         }
         //get data of the previous set
-        Event event = eventCash.getEventMap().get(userId);
+        Event event = eventCache.getEventMap().get(userId);
         event.setDescription(description);
         //save to cash
-        eventCash.saveEventCash(userId, event);
+        eventCache.saveEventCash(userId, event);
         //event input is expected to complete, changes must be saved
         return editEvent(message.getChatId(), userId);
     }
@@ -257,7 +257,7 @@ public class EventHandler {
             return sendMessage;
         }
         //the received event is saved in the cache
-        eventCash.saveEventCash(userId, eventRes);
+        eventCache.saveEventCash(userId, eventRes);
         //the received event show to user
         StringBuilder builder = buildEvent(eventRes);
         sendMessage.setText(builder.toString());
@@ -278,10 +278,10 @@ public class EventHandler {
             return sendMessage;
         }
         //get data of the previous set
-        Event event = eventCash.getEventMap().get(userId);
+        Event event = eventCache.getEventMap().get(userId);
         event.setDate(date);
         //save data to cache
-        eventCash.saveEventCash(userId, event);
+        eventCache.saveEventCash(userId, event);
         sendMessage.setText("Выберите период повторения(Единоразово(сработает один раз и удалится), " +
                 "Ежедневно в указанный час, " +
                 "1 раз в месяц в указанную дату, 1 раз в год в указанное число)");
@@ -303,16 +303,16 @@ public class EventHandler {
         //switch th state to enter the date
         botStateCash.saveBotState(userId, BotState.ENTERDATE);
         //get the previous set of event from the cash
-        Event event = eventCash.getEventMap().get(userId);
+        Event event = eventCache.getEventMap().get(userId);
         event.setDescription(description);
         //save to cache
-        eventCash.saveEventCash(userId, event);
+        eventCache.saveEventCash(userId, event);
         sendMessage.setText("Введите дату предстоящего события в формате DD.MM.YYYY HH:MM, например - 02.06.2021 21:24, либо 02.06.2021");
         return sendMessage;
     }
 
     //return event from database
-    private Event enterNumberEvent(String message, long userId) throws NumberFormatException, NullPointerException, EntityNotFoundException {
+    private Event enterNumberEvent(String message, long userId) throws NumberFormatException, NullPointerException {
         List<Event> list;
         if (userId == admin_id) {
             // =))
@@ -389,7 +389,7 @@ public class EventHandler {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(chatId));
         //get event from cache
-        Event event = eventCash.getEventMap().get(userId);
+        Event event = eventCache.getEventMap().get(userId);
         //in case something went wrong
         if (event.getEventId() == 0) {
             sendMessage.setText("Не удалось сохранить пользователя, нарушена последовательность действий");
@@ -398,20 +398,20 @@ public class EventHandler {
         eventDAO.save(event);
         sendMessage.setText("Изменение сохранено");
         //reset cache
-        eventCash.saveEventCash(userId, new Event());
+        eventCache.saveEventCash(userId, new Event());
         return sendMessage;
     }
 
     //save event from cache(for create operation)
     public SendMessage saveEvent(EventFreq freq, long userId, long chatId) {
-        Event event = eventCash.getEventMap().get(userId);
+        Event event = eventCache.getEventMap().get(userId);
         event.setFreq(freq);
         event.setUser(userDAO.findByUserId(userId));
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(chatId));
         eventDAO.save(event);
         //reset cache
-        eventCash.saveEventCash(userId, new Event());
+        eventCache.saveEventCash(userId, new Event());
         sendMessage.setText("Напоминание успешно сохранено");
         //reset cache
         botStateCash.saveBotState(userId, BotState.START);

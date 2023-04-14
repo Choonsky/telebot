@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import com.nemirovsky.telebot.cash.BotStateCash;
+import com.nemirovsky.telebot.cache.BotStateCache;
 import com.nemirovsky.telebot.model.handler.CallbackQueryHandler;
 import com.nemirovsky.telebot.model.handler.MessageHandler;
 
@@ -18,13 +18,13 @@ public class TelegramFacade {
 
     final MessageHandler messageHandler;
     final CallbackQueryHandler callbackQueryHandler;
-    final BotStateCash botStateCash;
+    final BotStateCache botStateCash;
 
     @Value("${telegrambot.adminId}")
     int adminId;
 
 
-    public TelegramFacade(MessageHandler messageHandler, CallbackQueryHandler callbackQueryHandler, BotStateCash botStateCash) {
+    public TelegramFacade(MessageHandler messageHandler, CallbackQueryHandler callbackQueryHandler, BotStateCache botStateCash) {
         this.messageHandler = messageHandler;
         this.callbackQueryHandler = callbackQueryHandler;
         this.botStateCash = botStateCash;

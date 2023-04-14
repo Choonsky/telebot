@@ -5,8 +5,8 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import com.nemirovsky.telebot.DAO.UserDAO;
-import com.nemirovsky.telebot.cash.BotStateCash;
-import com.nemirovsky.telebot.cash.EventCash;
+import com.nemirovsky.telebot.cache.BotStateCache;
+import com.nemirovsky.telebot.cache.EventCache;
 import com.nemirovsky.telebot.entity.Event;
 import com.nemirovsky.telebot.model.BotState;
 import com.nemirovsky.telebot.service.MenuService;
@@ -18,15 +18,15 @@ public class MessageHandler {
     private final UserDAO userDAO;
     private final MenuService menuService;
     private final EventHandler eventHandler;
-    private final BotStateCash botStateCash;
-    private final EventCash eventCash;
+    private final BotStateCache botStateCash;
+    private final EventCache eventCache;
 
-    public MessageHandler(UserDAO userDAO, MenuService menuService, EventHandler eventHandler, BotStateCash botStateCash, EventCash eventCash) {
+    public MessageHandler(UserDAO userDAO, MenuService menuService, EventHandler eventHandler, BotStateCache botStateCash, EventCache eventCache) {
         this.userDAO = userDAO;
         this.menuService = menuService;
         this.eventHandler = eventHandler;
         this.botStateCash = botStateCash;
-        this.eventCash = eventCash;
+        this.eventCache = eventCache;
     }
 
     public BotApiMethod<?> handle(Message message, BotState botState) {
@@ -64,7 +64,7 @@ public class MessageHandler {
                 //start create event, set state to next step
                 botStateCash.saveBotState(userId, BotState.ENTERDESCRIPTION);
                 //set new event to cache
-                eventCash.saveEventCash(userId, new Event());
+                eventCache.saveEventCash(userId, new Event());
                 sendMessage.setText("Введите описание события");
                 return sendMessage;
             case ("ENTERNUMBERFOREDIT"):

@@ -1,4 +1,4 @@
-package com.nemirovsky.telebot.cash;
+package com.nemirovsky.telebot.cache;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.util.Map;
 @Setter
 @Getter
 // used to save entered event data per session
-public class EventCash {
+public class EventCache {
 
     private final Map<Long, Event> eventMap = new HashMap<>();
 

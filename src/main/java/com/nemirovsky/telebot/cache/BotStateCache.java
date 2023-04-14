@@ -1,4 +1,4 @@
-package com.nemirovsky.telebot.cash;
+package com.nemirovsky.telebot.cache;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.util.Map;
 @Setter
 @Getter
 //Used to save state bot.
-public class BotStateCash {
+public class BotStateCache {
     private final Map<Long, BotState> botStateMap = new HashMap<>();
 
     public void saveBotState(long userId, BotState botState) {

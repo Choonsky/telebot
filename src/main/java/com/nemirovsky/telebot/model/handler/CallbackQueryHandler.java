@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import com.nemirovsky.telebot.cash.BotStateCash;
-import com.nemirovsky.telebot.cash.EventCash;
+import com.nemirovsky.telebot.cache.BotStateCache;
+import com.nemirovsky.telebot.cache.EventCache;
 import com.nemirovsky.telebot.entity.Event;
 import com.nemirovsky.telebot.model.BotState;
 import com.nemirovsky.telebot.model.EventFreq;
@@ -15,15 +15,15 @@ import com.nemirovsky.telebot.service.MenuService;
 @Component
 //processes incoming callback's
 public class CallbackQueryHandler {
-    private final BotStateCash botStateCash;
-    private final EventCash eventCash;
+    private final BotStateCache botStateCash;
+    private final EventCache eventCache;
     private final MenuService menuService;
     private final EventHandler eventHandler;
 
     @Autowired
-    public CallbackQueryHandler(BotStateCash botStateCash, EventCash eventCash, MenuService menuService, EventHandler eventHandler) {
+    public CallbackQueryHandler(BotStateCache botStateCash, EventCache eventCache, MenuService menuService, EventHandler eventHandler) {
         this.botStateCash = botStateCash;
-        this.eventCash = eventCash;
+        this.eventCache = eventCache;
         this.menuService = menuService;
         this.eventHandler = eventHandler;
     }
@@ -53,9 +53,9 @@ public class CallbackQueryHandler {
                 if (botStateCash.getBotStateMap().get(userId).name().equals("ENTERDATE")) {
                     callBackAnswer = eventHandler.saveEvent(EventFreq.TIME, userId, chatId);
                 } else {
-                    Event event = eventCash.getEventMap().get(userId);
+                    Event event = eventCache.getEventMap().get(userId);
                     event.setFreq(EventFreq.TIME);
-                    eventCash.saveEventCash(userId, event);
+                    eventCache.saveEventCash(userId, event);
                     callBackAnswer = eventHandler.editEvent(chatId, userId);
                 }
                 break;
@@ -63,9 +63,9 @@ public class CallbackQueryHandler {
                 if (botStateCash.getBotStateMap().get(userId).name().equals("ENTERDATE")) {
                     callBackAnswer = eventHandler.saveEvent(EventFreq.MONTH, userId, chatId);
                 } else {
-                    Event event = eventCash.getEventMap().get(userId);
+                    Event event = eventCache.getEventMap().get(userId);
                     event.setFreq(EventFreq.MONTH);
-                    eventCash.saveEventCash(userId, event);
+                    eventCache.saveEventCash(userId, event);
                     callBackAnswer = eventHandler.editEvent(chatId, userId);
                 }
                 break;
@@ -73,9 +73,9 @@ public class CallbackQueryHandler {
                 if (botStateCash.getBotStateMap().get(userId).name().equals("ENTERDATE")) {
                     callBackAnswer = eventHandler.saveEvent(EventFreq.EVERYDAY, userId, chatId);
                 } else {
-                    Event event = eventCash.getEventMap().get(userId);
+                    Event event = eventCache.getEventMap().get(userId);
                     event.setFreq(EventFreq.EVERYDAY);
-                    eventCash.saveEventCash(userId, event);
+                    eventCache.saveEventCash(userId, event);
                     callBackAnswer = eventHandler.editEvent(chatId, userId);
                 }
                 break;
@@ -83,14 +83,14 @@ public class CallbackQueryHandler {
                 if (botStateCash.getBotStateMap().get(userId).name().equals("ENTERDATE")) {
                     callBackAnswer = eventHandler.saveEvent(EventFreq.YEAR, userId, chatId);
                 } else {
-                    Event event = eventCash.getEventMap().get(userId);
+                    Event event = eventCache.getEventMap().get(userId);
                     event.setFreq(EventFreq.YEAR);
-                    eventCash.saveEventCash(userId, event);
+                    eventCache.saveEventCash(userId, event);
                     callBackAnswer = eventHandler.editEvent(chatId, userId);
                 }
                 break;
             case ("buttonDate"):
-                if (eventCash.getEventMap().get(userId).getEventId() != 0) {
+                if (eventCache.getEventMap().get(userId).getEventId() != 0) {
                     callBackAnswer = new SendMessage(String.valueOf(chatId), "Введите дату " +
                             "предстоящего события в формате DD.MM.YYYY HH:MM, например - " +
                             "02.06.2021 21:24, либо 02.06.2021");
@@ -101,7 +101,7 @@ public class CallbackQueryHandler {
                 }
                 break;
             case ("buttonDescription"):
-                if (eventCash.getEventMap().get(userId).getEventId() != 0) {
+                if (eventCache.getEventMap().get(userId).getEventId() != 0) {
                     callBackAnswer = new SendMessage(String.valueOf(chatId), "Введите описание события");
                     botStateCash.saveBotState(userId, BotState.EDITDESCRIPTION);
                 } else {
@@ -115,7 +115,7 @@ public class CallbackQueryHandler {
                 botStateCash.saveBotState(userId, BotState.ENTERTIME);
                 break;
             case ("buttonFreq"):
-                if (eventCash.getEventMap().get(userId).getEventId() != 0) {
+                if (eventCache.getEventMap().get(userId).getEventId() != 0) {
                     SendMessage sendMessage = new SendMessage(String.valueOf(chatId), "Выберите период повторения" +
                             "(Единоразово, 1 раз в месяц в указанную дату, 1 раз в год в указанное число)");
                     botStateCash.saveBotState(userId, BotState.EDITFREQ);
