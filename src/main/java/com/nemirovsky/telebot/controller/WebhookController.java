@@ -1,15 +1,17 @@
 package com.nemirovsky.telebot.controller;
 
 import com.nemirovsky.telebot.model.TelegramBot;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerRequest;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import java.util.Enumeration;
 
 @RestController
 public class WebhookController {
@@ -39,11 +41,17 @@ public class WebhookController {
     }
 
     @GetMapping("/")
-    public String get(ServerRequest request) {
+    public String get(HttpServletRequest request) {
 
-        //TODO: del
-        System.out.println("Incoming GET request: " + request.headers());
+        System.out.println("Incoming GET request! ");
 
-        return "<h1><center>This is Telebot v12 + LOGS testing center</center></h1>";
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = headerNames.nextElement();
+            String value = request.getHeader(key);
+            System.out.println(key + ": " + value);
+        }
+
+        return "<h1><center>This is Telebot v15 + more console output testing center</center></h1>";
     }
 }
