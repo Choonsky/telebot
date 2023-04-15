@@ -34,7 +34,7 @@ public class WebhookController {
         //return telegramBot.onWebhookUpdateReceived(update);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String get() {
         return "<h1><center>This is Telebot testing</center></h1>";
     }

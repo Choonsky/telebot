@@ -34,5 +34,11 @@ telegrambot:
   webHookPath: https://34.30.224.192/
   adminId: 12345
 
+telegram:
+  api-url: "https://api.telegram.org/"
+  webhook-path: "https://<...>.ngrok.io"
+  bot-name: "<что-то вроде @NameOfYourBot>"
+  bot-token: "<токен бота - цифры, двоеточие и белиберда:)>"
+
 eventservice:
   period: 600000
