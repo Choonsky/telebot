@@ -70,12 +70,6 @@
 			<version>8.0.0.Final</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-logging-logback</artifactId>
-			<version>0.130.9-alpha</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>

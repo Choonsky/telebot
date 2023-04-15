@@ -1,8 +1,6 @@
 package com.nemirovsky.telebot.controller;
 
 import com.nemirovsky.telebot.model.TelegramBot;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RestController
 public class WebhookController {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebhookController.class);
-
     private final TelegramBot telegramBot;
 
     public WebhookController(TelegramBot telegramBot) {
@@ -26,8 +22,11 @@ public class WebhookController {
 
 // point for message
     @PostMapping("/")
-    public BotApiMethod<?> onUpdateReceived(@RequestBody Update update) {
-        logger.info("POST request incoming: " + update);
+    public BotApiMethod<?> nUpdateReceived(@RequestBody Update update) {
+
+        //TODO: del
+        System.out.println("Incoming POST request: " + update);
+
         Message message = update.getMessage();
         long userId = message.getFrom().getId();
         long chatId = message.getChatId();
@@ -41,7 +40,10 @@ public class WebhookController {
 
     @GetMapping("/")
     public String get(ServerRequest request) {
-        logger.info("GET request incoming: " + request.headers());
+
+        //TODO: del
+        System.out.println("Incoming GET request: " + request.headers());
+
         return "<h1><center>This is Telebot v12 + LOGS testing center</center></h1>";
     }
 }
