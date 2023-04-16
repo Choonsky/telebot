@@ -52,6 +52,6 @@ public class WebhookController {
             System.out.println(key + ": " + value);
         }
 
-        return "<h1><center>This is Telebot v15 + more console output testing center</center></h1>";
+        return "<h1><center>This is Telebot v16 (AWS) testing center</center></h1>";
     }
 }
