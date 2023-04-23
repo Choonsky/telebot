@@ -4,9 +4,9 @@ server:
     enabled: true
   ssl:
     key-store-type: PKCS12 # The format used for the keystore. It could be set to JKS in case it is a JKS file
-    key-store: classpath:keystore/telebot-priv.p12 # The path to the keystore containing the certificate
+    key-store: classpath:keystore/telebot.p12 # The path to the keystore containing the certificate
     key-store-password: 12345678 # The password used to generate the certificate
-    key-alias: telebot.lostfoundpaw.com # The alias mapped to the certificate
+    key-alias: telebot # The alias mapped to the certificate
     enabled: true
     #certificate-private-key: keystore/telebot-self.pem
 
