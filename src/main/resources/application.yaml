@@ -26,7 +26,9 @@ spring:
     url: jdbc:h2:mem:test_db
     driver-class-name: org.h2.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: update
 
 telegrambot:
   userName: Choo1bot
