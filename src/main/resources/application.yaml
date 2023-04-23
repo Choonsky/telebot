@@ -33,7 +33,7 @@ spring:
 telegrambot:
   userName: Choo1bot
   botToken: 710277744:AAHze1GFOc7yTxPjCWXrckQ-azKA7bYTW0Y
-  webHookPath: https://34.30.224.192/
+  webHookPath: https://telebot.lostfoundpaw.com/
   adminId: 12345
 
 eventservice:
