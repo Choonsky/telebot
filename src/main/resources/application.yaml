@@ -4,9 +4,9 @@ server:
     enabled: true
   ssl:
     key-store-type: PKCS12 # The format used for the keystore. It could be set to JKS in case it is a JKS file
-    key-store: classpath:keystore/telebot-03.p12 # The path to the keystore containing the certificate
+    key-store: classpath:keystore/telebot.p12 # The path to the keystore containing the certificate
     key-store-password: 12345678 # The password used to generate the certificate
-    key-alias: telebot.lostfoundpaw.com # The alias mapped to the certificate
+    key-alias: tomcat # The alias mapped to the certificate
     enabled: true
     #certificate-private-key: keystore/telebot-self.pem
 
@@ -33,8 +33,10 @@ spring:
 
 telegrambot:
   userName: Choo1bot
-  botToken: 710277744:AAHze1GFOc7yTxPjCWXrckQ-azKA7bYTW0Y
-  webHookPath: https://telebot.lostfoundpaw.com/
+  #botToken: 710277744:AAHze1GFOc7yTxPjCWXrckQ-azKA7bYTW0Y #
+  #botToken: 5905838405:AAEN3TSJo_JxW3oaQ82pbbb2yPGx1lqOKKM # @LostFoundPetsBot
+  botToken: 5805197032:AAFQYR6YU1a1wpVjmRZoT644JbZ2NJ4u3k8 # NemoMiniBot
+  webHookPath: https://telebot.lostfoundpaw.com
   adminId: 12345
 
 eventservice:
