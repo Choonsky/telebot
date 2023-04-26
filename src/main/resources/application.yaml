@@ -32,10 +32,8 @@ spring:
       ddl-auto: update
 
 telegrambot:
-  userName: Choo1bot
-  #botToken: 710277744:AAHze1GFOc7yTxPjCWXrckQ-azKA7bYTW0Y #
-  #botToken: 5905838405:AAEN3TSJo_JxW3oaQ82pbbb2yPGx1lqOKKM # @LostFoundPetsBot
-  botToken: 5805197032:AAFQYR6YU1a1wpVjmRZoT644JbZ2NJ4u3k8 # NemoMiniBot
+  userName: LostFoundPawBot
+  botToken: 6063479500:AAHLXRt211ypd74OnrR_64daPmuBvD-4YZQ # LostFoundPawBot
   webHookPath: https://telebot.lostfoundpaw.com
   adminId: 12345
 
