@@ -1,5 +1,6 @@
 package com.nemirovsky.telebot.controller;
 
+import com.nemirovsky.telebot.model.Dictionary;
 import com.nemirovsky.telebot.model.TelegramBot;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.Enumeration;
 
@@ -39,18 +41,38 @@ public class WebhookController {
         if (user.getUserName() != null) userName = userName.concat(" \"" + user.getUserName() + "\"");
         if (user.getLastName() != null) userName = userName.concat(" " + user.getLastName());
 
+        String lang = user.getLanguageCode();
+
+        String langText = switch (lang) {
+            case "ru" -> "русский";
+            case "en" -> "English";
+            case "kg" -> "кыргызский";
+            case "kz" -> "казахский";
+            default -> lang;
+        };
+
         if ("/start".equals(msg.getText())) {
-            txt =
-                    "Добро пожаловать на сайт по отлову, тьфу, поиску домашних животных и их владельцев, <b>"
-                            + userName + "</b>! Мы определили ваш язык как " + user.getLanguageCode()
-                            + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\nВыберите " +
-                            "кнопку или введите текст запроса или команду...";
+            txt = Dictionary.GREETING_01.map.get(lang) + userName + Dictionary.GREETING_02.map.get(lang) + langText
+                    + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\nВыберите "
+                    + Dictionary.GREETING_03.map.get(lang);
         } else {
-            txt = "Вы ввели " + msg.getText() + ", " + user.getUserName() + "!";
+            txt = Dictionary.ENTERED.map.get(lang) + msg.getText() + ", " + userName + "!";
         }
         long userId = msg.getFrom().getId();
         long chatId = msg.getChatId();
 
+        var next = InlineKeyboardButton.builder()
+                .text("").callbackData("next")
+                .build();
+
+        var back = InlineKeyboardButton.builder()
+                .text("Back").callbackData("back")
+                .build();
+
+        var url = InlineKeyboardButton.builder()
+                .text("Tutorial")
+                .url("https://core.telegram.org/bots/api")
+                .build();
 
         return SendMessage.builder().chatId(String.valueOf(chatId))
                 .parseMode("HTML").text(txt).build();
