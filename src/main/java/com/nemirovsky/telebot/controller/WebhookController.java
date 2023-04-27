@@ -23,7 +23,7 @@ public class WebhookController {
         this.telegramBot = telegramBot;
     }
 
-// point for message
+    // point for message
     @PostMapping("/")
     public BotApiMethod<?> updateReceived(@RequestBody Update update) {
 
@@ -32,23 +32,24 @@ public class WebhookController {
 
         //TODO: del
         System.out.println("Incoming POST request: " + update);
-        String text;
+        String txt;
 
         if ("/start".equals(msg.getText())) {
-            text =
-                    "Добро пожаловать на сайт по отлову, тьфу, поиску домашних животных и их владельцев, "
-                           + user.getFirstName() + " " + user.getLastName() + " по кличке " + user.getUserName()
-                            + "! Мы определили ваш язык как " + user.getLanguageCode() + ". Выберите кнопку или " +
-                            "введите текст запроса или команду...";
+            txt =
+                    "Добро пожаловать на сайт по отлову, тьфу, поиску домашних животных и их владельцев, <b>"
+                            + user.getFirstName() + " " + user.getLastName() + "</b> по кличке " + user.getUserName()
+                            + "! Мы определили ваш язык как " + user.getLanguageCode()
+                            + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\nВыберите " +
+                            "кнопку или введите текст запроса или команду...";
         } else {
-            text = "Вы ввели " + msg.getText() + ", " + user.getUserName() + "!";
+            txt = "Вы ввели " + msg.getText() + ", " + user.getUserName() + "!";
         }
         long userId = msg.getFrom().getId();
         long chatId = msg.getChatId();
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(String.valueOf(chatId));
-        sendMessage.setText(text);
-        return sendMessage;
+
+
+        return SendMessage.builder().chatId(String.valueOf(chatId))
+                .parseMode("HTML").text(txt).build();
 
         //return telegramBot.onWebhookUpdateReceived(update);
     }
@@ -95,6 +96,6 @@ public class WebhookController {
             System.out.println(key + ": " + value);
         }
 
-        return "<h1><center>This is Telebot v18 (AWS) testing center</center></h1>";
+        return "<h1><center>This is Telebot v0.1 (AWS) testing center</center></h1>";
     }
 }
