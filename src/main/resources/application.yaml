@@ -39,3 +39,7 @@ telegrambot:
 
 eventservice:
   period: 600000
+
+  #shopId test 67192
+  #
+  #shopArticleId test 352780
