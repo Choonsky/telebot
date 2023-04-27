@@ -34,11 +34,15 @@ public class WebhookController {
         System.out.println("Incoming POST request: " + update);
         String txt;
 
+        String userName = user.getFirstName();
+
+        if (user.getUserName() != null) userName = userName.concat(" \"" + user.getUserName() + "\"");
+        if (user.getLastName() != null) userName = userName.concat(" " + user.getLastName());
+
         if ("/start".equals(msg.getText())) {
             txt =
                     "Добро пожаловать на сайт по отлову, тьфу, поиску домашних животных и их владельцев, <b>"
-                            + user.getFirstName() + " " + user.getLastName() + "</b> по кличке " + user.getUserName()
-                            + "! Мы определили ваш язык как " + user.getLanguageCode()
+                            + userName + "</b>! Мы определили ваш язык как " + user.getLanguageCode()
                             + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\nВыберите " +
                             "кнопку или введите текст запроса или команду...";
         } else {
