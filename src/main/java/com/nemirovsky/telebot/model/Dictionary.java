@@ -19,9 +19,9 @@ public enum Dictionary {
             "en", "Choose a button or menu item to continue...")),
 
     ENTERED(Map.of(
-            "default", "Вы ввели: ",
-            "ru", "Вы ввели: ",
-            "en", "You have entered")),
+            "default", "Вы ввели: <b>",
+            "ru", "Вы ввели: <b>",
+            "en", "You have entered: <b>")),
     BUTTON_LOST(Map.of(
             "default", "Пропал питомец",
                     "ru", "Пропал питомец",
