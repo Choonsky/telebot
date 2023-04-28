@@ -30,7 +30,8 @@ public class WebhookController {
     }
 
     @PostMapping("/")
-    public BotApiMethod<?> updateReceived(@RequestBody Update update, @RequestHeader ServerRequest.Headers headers) {
+    public BotApiMethod<?> updateReceived(@RequestBody Update update,
+                                          @RequestHeader(required = false) ServerRequest.Headers headers) {
 
         Message msg = update.getMessage();
 
@@ -133,6 +134,6 @@ public class WebhookController {
             System.out.println(key + ": " + value);
         }
 
-        return "<h1><center>This is Telebot v0.1 (AWS) testing center</center></h1>";
+        return "<h1><center>This is Telebot v0.2 (AWS) testing center</center></h1>";
     }
 }
