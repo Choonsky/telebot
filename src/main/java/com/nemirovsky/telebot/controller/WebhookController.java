@@ -60,13 +60,13 @@ public class WebhookController {
                 String buttonData = update.getCallbackQuery().getData();
                 long messageId = update.getCallbackQuery().getMessage().getMessageId();
                 long chatId = update.getCallbackQuery().getMessage().getChatId();
-                //String text = update.getCallbackQuery().getMessage().getText();
+                String text = update.getCallbackQuery().getMessage().getText();
 
                 return EditMessageText.builder()
                         .chatId(chatId)
                         .messageId(toIntExact(messageId))
                         .parseMode("HTML")
-                        .text("\n\n Вы нажали <b>" + buttonData + "</b>!")
+                        .text(text + "\n\n Вы нажали <b>" + buttonData + "</b>!")
                         .replyMarkup(keyboard)
                         .build();
             } else {
