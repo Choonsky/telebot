@@ -34,6 +34,25 @@ public class WebhookController {
                                           @RequestHeader(required = false) ServerRequest.Headers headers) {
 
         Message msg = update.getMessage();
+        String lang = "default";
+
+        InlineKeyboardButton lostButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_LOST.map.get(lang)).callbackData("lost")
+                .build();
+
+        InlineKeyboardButton foundButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_FOUND.map.get(lang)).callbackData("found")
+                .build();
+
+        InlineKeyboardButton infoButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_INFO.map.get(lang))
+                .url("https://telebot.lostfoundpaw.com/info.html")
+                .build();
+
+        InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
+                .keyboardRow(List.of(lostButton, foundButton))
+                .keyboardRow(List.of(infoButton))
+                .build();
 
         if (msg == null) {
             if (update.hasCallbackQuery()) {
@@ -46,7 +65,9 @@ public class WebhookController {
                 return EditMessageText.builder()
                         .chatId(chatId)
                         .messageId(toIntExact(messageId))
+                        .parseMode("HTML")
                         .text(text + "\n\n Вы нажали " + buttonData + "!")
+                        .replyMarkup(keyboard)
                         .build();
             } else {
                 System.out.println("Request received: " + headers);
@@ -65,7 +86,7 @@ public class WebhookController {
         if (user.getUserName() != null) userName = userName.concat(" \"" + user.getUserName() + "\"");
         if (user.getLastName() != null) userName = userName.concat(" " + user.getLastName());
 
-        String lang = user.getLanguageCode();
+        lang = user.getLanguageCode();
 
         String langText = switch (lang) {
             case "ru" -> "русский";
@@ -87,24 +108,6 @@ public class WebhookController {
 
         long userId = msg.getFrom().getId();
         long chatId = msg.getChatId();
-
-        InlineKeyboardButton lostButton = InlineKeyboardButton.builder()
-                .text(Dictionary.BUTTON_LOST.map.get(lang)).callbackData("lost")
-                .build();
-
-        InlineKeyboardButton foundButton = InlineKeyboardButton.builder()
-                .text(Dictionary.BUTTON_FOUND.map.get(lang)).callbackData("found")
-                .build();
-
-        InlineKeyboardButton infoButton = InlineKeyboardButton.builder()
-                .text(Dictionary.BUTTON_INFO.map.get(lang))
-                .url("https://telebot.lostfoundpaw.com/info.html")
-                .build();
-
-        InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
-                .keyboardRow(List.of(lostButton, foundButton))
-                .keyboardRow(List.of(infoButton))
-                .build();
 
         return SendMessage
                 .builder()
@@ -134,6 +137,6 @@ public class WebhookController {
             System.out.println(key + ": " + value);
         }
 
-        return "<h1><center>This is Telebot v0.2 (AWS) testing center</center></h1>";
+        return "<h1><center>This is Telebot v0.3 (AWS) testing center</center></h1>";
     }
 }
