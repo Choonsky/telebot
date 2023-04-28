@@ -12,14 +12,20 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Enumeration;
+import java.util.List;
 
 @RestController
 public class WebhookController {
 
     private final TelegramBot telegramBot;
+
+    private InlineKeyboardMarkup keyboardM1;
+    private InlineKeyboardMarkup keyboardM2;
 
     public WebhookController(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
@@ -53,7 +59,7 @@ public class WebhookController {
 
         if ("/start".equals(msg.getText())) {
             txt = Dictionary.GREETING_01.map.get(lang) + userName + Dictionary.GREETING_02.map.get(lang) + langText
-                    + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\nВыберите "
+                    + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\n"
                     + Dictionary.GREETING_03.map.get(lang);
         } else {
             txt = Dictionary.ENTERED.map.get(lang) + msg.getText() + ", " + userName + "!";
@@ -61,21 +67,34 @@ public class WebhookController {
         long userId = msg.getFrom().getId();
         long chatId = msg.getChatId();
 
-        var next = InlineKeyboardButton.builder()
-                .text("").callbackData("next")
+        InlineKeyboardButton lostButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_LOST.map.get(lang)).callbackData("lost")
                 .build();
 
-        var back = InlineKeyboardButton.builder()
-                .text("Back").callbackData("back")
+        InlineKeyboardButton foundButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_FOUND.map.get(lang)).callbackData("found")
                 .build();
 
-        var url = InlineKeyboardButton.builder()
-                .text("Tutorial")
-                .url("https://core.telegram.org/bots/api")
+        InlineKeyboardButton infoButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_INFO.map.get(lang))
+                .url("https://lostfoundpaw.com")
                 .build();
 
-        return SendMessage.builder().chatId(String.valueOf(chatId))
-                .parseMode("HTML").text(txt).build();
+        keyboardM1 = InlineKeyboardMarkup.builder()
+                .keyboardRow(List.of(lostButton, foundButton)).build();
+
+        keyboardM2 = InlineKeyboardMarkup.builder()
+                .keyboardRow(List.of(lostButton))
+                .keyboardRow(List.of(infoButton))
+                .build();
+
+        return SendMessage
+                .builder()
+                .chatId(String.valueOf(chatId))
+                .parseMode("HTML")
+                .text(txt)
+                .replyMarkup(txt.contains("zhopa") ? keyboardM1 : keyboardM2)
+                .build();
 
         //return telegramBot.onWebhookUpdateReceived(update);
     }

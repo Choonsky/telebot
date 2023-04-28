@@ -21,7 +21,19 @@ public enum Dictionary {
     ENTERED(Map.of(
             "default", "Вы ввели: ",
             "ru", "Вы ввели: ",
-            "en", "You have entered"));
+            "en", "You have entered")),
+    BUTTON_LOST(Map.of(
+            "default", "Пропал питомец",
+                    "ru", "Пропал питомец",
+                    "en", "Pet is lost")),
+    BUTTON_FOUND(Map.of(
+            "default", "Нашёлся кто-то",
+            "ru", "Нашёлся кто-то",
+            "en", "Pet is found")),
+    BUTTON_INFO(Map.of(
+            "default", "Информация о нас",
+            "ru", "Информация о нас",
+            "en", "About us"));
 
     public final Map<String, String> map;
 
