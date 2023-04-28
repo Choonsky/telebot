@@ -31,7 +31,6 @@ public class WebhookController {
         this.telegramBot = telegramBot;
     }
 
-    // point for message
     @PostMapping("/")
     public BotApiMethod<?> updateReceived(@RequestBody Update update) {
 
@@ -77,7 +76,7 @@ public class WebhookController {
 
         InlineKeyboardButton infoButton = InlineKeyboardButton.builder()
                 .text(Dictionary.BUTTON_INFO.map.get(lang))
-                .url("https://lostfoundpaw.com")
+                .url("https://telebot.lostfoundpaw.com/info.html")
                 .build();
 
         keyboardM1 = InlineKeyboardMarkup.builder()
@@ -96,38 +95,14 @@ public class WebhookController {
                 .replyMarkup(txt.contains("zhopa") ? keyboardM1 : keyboardM2)
                 .build();
 
-        //return telegramBot.onWebhookUpdateReceived(update);
     }
 
-//    try {
-//        SendPhoto sendPhoto = new SendPhoto()
-//                .setChatId(update.getMessage().getChatId())
-//                .setPhoto("Photo", new FileInputStream(new File("/root/index.png")));
-//        execute(sendPhoto);
-//    } catch (FileNotFoundException e) {
-//        e.printStackTrace();
-//    } catch (TelegramApiException e) {
-//        e.printStackTrace();
-//    }
-
-
-//    public void sendPhotoMessage(long chatId, UserContent content) {
-//
-//        String caption = getCaption(content);
-//
 //        SendPhoto sendPhoto = SendPhoto.builder()
 //                .chatId(chatId)
 //                .photo(new InputFile(new File(content.getMediaUrl())))
 //                .caption(caption)
 //                .parseMode(ParseMode.HTML)
 //                .build();
-//
-//        try {
-//            chronologyBot.execute(sendPhoto);
-//        } catch (TelegramApiException e) {
-//            log.error("Can't send photo message", e);
-//        }
-//    }
 
     @GetMapping("/")
     public String get(HttpServletRequest request) {
