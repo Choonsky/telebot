@@ -60,13 +60,13 @@ public class WebhookController {
                 String buttonData = update.getCallbackQuery().getData();
                 long messageId = update.getCallbackQuery().getMessage().getMessageId();
                 long chatId = update.getCallbackQuery().getMessage().getChatId();
-                String text = update.getCallbackQuery().getMessage().getText();
+                //String text = update.getCallbackQuery().getMessage().getText();
 
                 return EditMessageText.builder()
                         .chatId(chatId)
                         .messageId(toIntExact(messageId))
                         .parseMode("HTML")
-                        .text(text + "\n\n Вы нажали " + buttonData + "!")
+                        .text("\n\n Вы нажали <b>" + buttonData + "</b>!")
                         .replyMarkup(keyboard)
                         .build();
             } else {
@@ -137,6 +137,6 @@ public class WebhookController {
             System.out.println(key + ": " + value);
         }
 
-        return "<h1><center>This is Telebot v0.3 (AWS) testing center</center></h1>";
+        return "<h1><center>This is Telebot v0.4 (AWS) testing center</center></h1>";
     }
 }
