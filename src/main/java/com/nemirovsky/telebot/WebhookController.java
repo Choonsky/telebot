@@ -1,4 +1,4 @@
-package com.nemirovsky.telebot.controller;
+package com.nemirovsky.telebot;
 
 import com.nemirovsky.telebot.telegram.Dictionary;
 import com.nemirovsky.telebot.telegram.TelegramBot;

@@ -1,4 +1,4 @@
-package com.nemirovsky.telebot.botconfig;
+package com.nemirovsky.telebot.config;
 
 import lombok.AccessLevel;
 import lombok.Getter;
