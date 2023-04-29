@@ -1,6 +1,7 @@
-package com.nemirovsky.telebot.model;
+package com.nemirovsky.telebot.telegram;
 
 public enum BotState {
+    DEFAULT,//the bot will wait for the description to be entered.
     ENTERDESCRIPTION,//the bot will wait for the description to be entered.
     START,
     MYEVENTS, //the bot show to user list events.

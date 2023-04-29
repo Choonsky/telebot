@@ -1,7 +1,7 @@
 package com.nemirovsky.telebot.DAO;
 
-import com.nemirovsky.telebot.entity.Event;
-import com.nemirovsky.telebot.entity.User;
+import com.nemirovsky.telebot.model.Event;
+import com.nemirovsky.telebot.model.User;
 import com.nemirovsky.telebot.repo.EventRepository;
 import com.nemirovsky.telebot.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

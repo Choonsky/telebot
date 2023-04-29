@@ -2,8 +2,8 @@ package com.nemirovsky.telebot.service;
 
 import com.nemirovsky.telebot.DAO.EventCacheDAO;
 import com.nemirovsky.telebot.DAO.EventDAO;
-import com.nemirovsky.telebot.entity.Event;
-import com.nemirovsky.telebot.entity.EventCacheEntity;
+import com.nemirovsky.telebot.model.Event;
+import com.nemirovsky.telebot.model.EventCacheEntity;
 import com.nemirovsky.telebot.model.EventFreq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
-import java.util.stream.Collectors;
 
 @EnableScheduling
 @Service

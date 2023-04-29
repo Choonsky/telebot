@@ -1,4 +1,4 @@
-package com.nemirovsky.telebot.entity;
+package com.nemirovsky.telebot.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

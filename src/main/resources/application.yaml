@@ -8,7 +8,6 @@ server:
     key-store-password: 12345678 # The password used to generate the certificate
     key-alias: tomcat # The alias mapped to the certificate
     enabled: true
-    #certificate-private-key: keystore/telebot-self.pem
 
 spring:
   application:
@@ -18,12 +17,7 @@ spring:
 #      sql:
 #        instance-connection-name: braided-rush-383415:us-central1:postgres-01
 #        database-name: telebot
-#
   datasource:
-    #username: postgres
-    #password: qwert12345
-    #hikari:
-    #  maximum-pool-size: 10
     url: jdbc:h2:mem:test_db
     driver-class-name: org.h2.Driver
   jpa:
@@ -31,15 +25,7 @@ spring:
     hibernate:
       ddl-auto: update
 
-telegrambot:
-  userName: LostFoundPawBot
-  botToken: 6063479500:AAHLXRt211ypd74OnrR_64daPmuBvD-4YZQ # LostFoundPawBot
+telegram:
+  botName: LostFoundPawBot
+  botToken: 6063479500:AAHLXRt211ypd74OnrR_64daPmuBvD-4YZQ # LostFoundPaw
   webHookPath: https://telebot.lostfoundpaw.com
-  adminId: 12345
-
-eventservice:
-  period: 600000
-
-  #shopId test 67192
-  #
-  #shopArticleId test 352780

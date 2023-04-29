@@ -1,7 +1,7 @@
 package com.nemirovsky.telebot.service;
 
 import com.nemirovsky.telebot.DAO.UserDAO;
-import com.nemirovsky.telebot.entity.User;
+import com.nemirovsky.telebot.model.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;

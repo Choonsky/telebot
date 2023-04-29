@@ -1,6 +1,5 @@
-package com.nemirovsky.telebot.entity;
+package com.nemirovsky.telebot.model;
 
-import com.nemirovsky.telebot.model.EventFreq;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;

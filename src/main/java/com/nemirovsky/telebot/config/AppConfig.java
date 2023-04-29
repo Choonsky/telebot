@@ -2,8 +2,9 @@ package com.nemirovsky.telebot.config;
 
 
 import com.nemirovsky.telebot.botconfig.TelegramBotConfig;
-import com.nemirovsky.telebot.model.TelegramBot;
-import com.nemirovsky.telebot.model.TelegramFacade;
+import com.nemirovsky.telebot.telegram.TelegramBot;
+import com.nemirovsky.telebot.telegram.handler.CallbackQueryHandler;
+import com.nemirovsky.telebot.telegram.handler.MessageHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
@@ -23,10 +24,10 @@ public class AppConfig {
     }
 
     @Bean
-    public TelegramBot springWebhookBot(SetWebhook setWebhook, TelegramFacade telegramFacade) {
-        TelegramBot bot = new TelegramBot(telegramFacade, setWebhook);
-        bot.setBotToken(botConfig.getBotToken());
-        bot.setBotUsername(botConfig.getUserName());
+    public TelegramBot springWebhookBot(SetWebhook setWebhook, MessageHandler messageHandler,
+                                        CallbackQueryHandler callbackQueryHandler) {
+        TelegramBot bot = new TelegramBot(setWebhook, botConfig.getBotToken(), messageHandler, callbackQueryHandler);
+        bot.setBotUsername(botConfig.getBotName());
         bot.setBotPath(botConfig.getWebHookPath());
 
         return bot;

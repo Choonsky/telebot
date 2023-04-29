@@ -2,7 +2,7 @@ package com.nemirovsky.telebot.service;
 
 import com.nemirovsky.telebot.DAO.EventCacheDAO;
 import com.nemirovsky.telebot.config.ApplicationContextProvider;
-import com.nemirovsky.telebot.model.TelegramBot;
+import com.nemirovsky.telebot.telegram.TelegramBot;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

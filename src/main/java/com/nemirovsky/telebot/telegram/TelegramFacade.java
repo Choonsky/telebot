@@ -1,8 +1,8 @@
-package com.nemirovsky.telebot.model;
+package com.nemirovsky.telebot.telegram;
 
 import com.nemirovsky.telebot.cache.BotStateCache;
-import com.nemirovsky.telebot.model.handler.CallbackQueryHandler;
-import com.nemirovsky.telebot.model.handler.MessageHandler;
+import com.nemirovsky.telebot.telegram.handler.CallbackQueryHandler;
+import com.nemirovsky.telebot.telegram.handler.MessageHandler;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;

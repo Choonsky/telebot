@@ -1,6 +1,6 @@
 package com.nemirovsky.telebot.cache;
 
-import com.nemirovsky.telebot.entity.Event;
+import com.nemirovsky.telebot.model.Event;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;

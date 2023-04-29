@@ -1,10 +1,8 @@
 package com.nemirovsky.telebot.controller;
 
-import com.nemirovsky.telebot.model.Dictionary;
-import com.nemirovsky.telebot.model.TelegramBot;
-import jakarta.servlet.http.HttpServletRequest;
+import com.nemirovsky.telebot.telegram.Dictionary;
+import com.nemirovsky.telebot.telegram.TelegramBot;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.ServerRequest;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -12,10 +10,11 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import java.util.Enumeration;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
@@ -30,18 +29,21 @@ public class WebhookController {
     }
 
     @PostMapping("/")
-    public BotApiMethod<?> updateReceived(@RequestBody Update update,
-                                          @RequestHeader(required = false) ServerRequest.Headers headers) {
+    public BotApiMethod<?> updateReceived(@RequestBody Update update) {
 
+        return telegramBot.onWebhookUpdateReceived(update);
+/*
         Message msg = update.getMessage();
         String lang = "default";
 
         InlineKeyboardButton lostButton = InlineKeyboardButton.builder()
-                .text(Dictionary.BUTTON_LOST.map.get(lang)).callbackData("lost")
+                .text(Dictionary.BUTTON_LOST.map.get(lang))
+                .callbackData("lost")
                 .build();
 
         InlineKeyboardButton foundButton = InlineKeyboardButton.builder()
-                .text(Dictionary.BUTTON_FOUND.map.get(lang)).callbackData("found")
+                .text(Dictionary.BUTTON_FOUND.map.get(lang))
+                .callbackData("found")
                 .build();
 
         InlineKeyboardButton infoButton = InlineKeyboardButton.builder()
@@ -49,9 +51,25 @@ public class WebhookController {
                 .url("https://telebot.lostfoundpaw.com/info.html")
                 .build();
 
+        KeyboardButton langButton = KeyboardButton.builder()
+                .text(lang)
+                .build();
+
+        KeyboardButton helpButton = KeyboardButton.builder()
+                .text("?")
+                .build();
+
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
                 .keyboardRow(List.of(lostButton, foundButton))
                 .keyboardRow(List.of(infoButton))
+                .build();
+
+        KeyboardRow row = new KeyboardRow();
+        row.add(langButton);
+        row.add(helpButton);
+
+        ReplyKeyboardMarkup keyboardMarkup = ReplyKeyboardMarkup.builder()
+                .keyboardRow(row)
                 .build();
 
         if (msg == null) {
@@ -70,7 +88,7 @@ public class WebhookController {
                         .replyMarkup(keyboard)
                         .build();
             } else {
-                System.out.println("Request received: " + headers);
+                System.out.println("Request without a message or callback query received: " + headers);
                 return null;
             }
         }
@@ -96,9 +114,7 @@ public class WebhookController {
             default -> lang;
         };
 
-        if ("/start".
-
-                equals(msg.getText())) {
+        if ("/start".equals(msg.getText())) {
             txt = Dictionary.GREETING_01.map.get(lang) + userName + Dictionary.GREETING_02.map.get(lang) + langText
                     + ". <tg-emoji emoji-id=\"5368324170671202286\">\uD83D\uDC4D</tg-emoji>\r\n"
                     + Dictionary.GREETING_03.map.get(lang);
@@ -114,29 +130,14 @@ public class WebhookController {
                 .chatId(String.valueOf(chatId))
                 .parseMode("HTML")
                 .text(txt)
-                .replyMarkup(keyboard)
+                .replyMarkup("/start".equals(msg.getText()) ? keyboardMarkup : keyboard)
                 .build();
+
+ */
     }
 
-//        SendPhoto sendPhoto = SendPhoto.builder()
-//                .chatId(chatId)
-//                .photo(new InputFile(new File(content.getMediaUrl())))
-//                .caption(caption)
-//                .parseMode(ParseMode.HTML)
-//                .build();
-
     @GetMapping("/")
-    public String get(HttpServletRequest request) {
-
-        System.out.println("Incoming GET request! ");
-
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = headerNames.nextElement();
-            String value = request.getHeader(key);
-            System.out.println(key + ": " + value);
-        }
-
-        return "<h1><center>This is Telebot v0.4 (AWS) testing center</center></h1>";
+    public String get() {
+        return "<h1><center>This is Telebot v0.5 (AWS) testing center</center></h1>";
     }
 }

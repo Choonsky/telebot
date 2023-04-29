@@ -1,12 +1,12 @@
-package com.nemirovsky.telebot.model.handler;
+package com.nemirovsky.telebot.telegram.handler;
 
 import com.nemirovsky.telebot.DAO.EventDAO;
 import com.nemirovsky.telebot.DAO.UserDAO;
 import com.nemirovsky.telebot.cache.BotStateCache;
 import com.nemirovsky.telebot.cache.EventCache;
-import com.nemirovsky.telebot.entity.Event;
-import com.nemirovsky.telebot.entity.User;
-import com.nemirovsky.telebot.model.BotState;
+import com.nemirovsky.telebot.model.Event;
+import com.nemirovsky.telebot.model.User;
+import com.nemirovsky.telebot.telegram.BotState;
 import com.nemirovsky.telebot.model.EventFreq;
 import com.nemirovsky.telebot.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;

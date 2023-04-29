@@ -1,4 +1,4 @@
-package com.nemirovsky.telebot.model;
+package com.nemirovsky.telebot.telegram;
 
 import java.util.Map;
 

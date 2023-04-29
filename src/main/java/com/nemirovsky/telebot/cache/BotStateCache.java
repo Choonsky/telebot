@@ -1,6 +1,6 @@
 package com.nemirovsky.telebot.cache;
 
-import com.nemirovsky.telebot.model.BotState;
+import com.nemirovsky.telebot.telegram.BotState;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
