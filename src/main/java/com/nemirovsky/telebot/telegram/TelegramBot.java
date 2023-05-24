@@ -39,10 +39,10 @@ public class TelegramBot extends SpringWebhookBot {
             return handleUpdate(update);
         } catch (IllegalArgumentException e) {
             return new SendMessage(update.getMessage().getChatId().toString(),
-                    "EXCEPTION_ILLEGAL_MESSAGE");
+                    "EXCEPTION_ILLEGAL_MESSAGE: " + e.getMessage());
         } catch (Exception e) {
             return new SendMessage(update.getMessage().getChatId().toString(),
-                    "EXCEPTION_WHAT_THE_FUCK");
+                    "EXCEPTION_WHAT_THE_FUCK: " + e.getMessage());
         }
     }
 

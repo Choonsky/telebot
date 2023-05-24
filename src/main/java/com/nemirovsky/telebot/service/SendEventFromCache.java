@@ -1,7 +1,6 @@
 package com.nemirovsky.telebot.service;
 
 import com.nemirovsky.telebot.DAO.EventCacheDAO;
-import com.nemirovsky.telebot.model.EventCacheEntity;
 import com.nemirovsky.telebot.telegram.TelegramBot;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
