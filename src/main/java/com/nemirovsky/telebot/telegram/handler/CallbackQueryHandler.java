@@ -2,7 +2,9 @@ package com.nemirovsky.telebot.telegram.handler;
 
 import com.nemirovsky.telebot.cache.BotStateCache;
 import com.nemirovsky.telebot.cache.EventCache;
+import com.nemirovsky.telebot.model.Event;
 import com.nemirovsky.telebot.telegram.BotState;
+import com.nemirovsky.telebot.model.EventFreq;
 import com.nemirovsky.telebot.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

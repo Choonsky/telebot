@@ -1,10 +1,10 @@
 package com.nemirovsky.telebot.config;
 
 
+import com.nemirovsky.telebot.botconfig.TelegramBotConfig;
 import com.nemirovsky.telebot.telegram.TelegramBot;
 import com.nemirovsky.telebot.telegram.handler.CallbackQueryHandler;
 import com.nemirovsky.telebot.telegram.handler.MessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
@@ -14,7 +14,6 @@ import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 public class AppConfig {
     private final TelegramBotConfig botConfig;
 
-    @Autowired
     public AppConfig(TelegramBotConfig botConfig) {
         this.botConfig = botConfig;
     }
