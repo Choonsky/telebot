@@ -53,7 +53,7 @@ public class TelegramBot extends SpringWebhookBot {
         } else {
             Message message = update.getMessage();
             if (message != null) {
-                return messageHandler.handle(update.getMessage(), BotState.DEFAULT);
+                return messageHandler.handle(update.getMessage());
             } else {
                 throw new NoMessageException();
             }
