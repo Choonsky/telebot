@@ -1,0 +1,48 @@
+package com.nemirovsky.telebot.model;
+
+public enum Page {
+    HELLO,
+    MAIN,
+    COUNTRY,
+    REGION,
+    LOST_MENU,
+    FOUND_MENU,
+    AVAILABLE_MENU,
+    LANG,
+    INFO,
+
+    FOUND_SPECIES,
+    FOUND_OTHER,
+    FOUND_DESCRIPTION,
+    FOUND_PHOTO,
+    FOUND_PHONE,
+    FOUND_USERNAME,
+    FOUND_ENTER,
+    FOUND_CHECK,
+    FOUND_FINISH,
+
+    LOST_SPECIES,
+    LOST_OTHER,
+    LOST_NAME,
+    LOST_DESCRIPTION,
+    LOST_PHOTO,
+    LOST_PHONE,
+    LOST_USERNAME,
+    LOST_ENTER,
+    LOST_AMOUNT,
+    LOST_REWARD,
+    LOST_CHECK,
+    LOST_FINISH,
+
+    LOST_LIST,
+    LOST_PAGE,
+    LOST_PET,
+
+    FOUND_LIST,
+    FOUND_PAGE,
+    FOUND_PET,
+
+    AVAILABLE_LIST,
+    AVAILABLE_PAGE,
+    AVAILABLE_PET
+}

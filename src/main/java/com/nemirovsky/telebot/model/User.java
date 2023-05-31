@@ -25,8 +25,8 @@ public class User {
     //sets the broadcast time of events for your time zone
     private int timeZone;
 
-    @OneToMany(mappedBy="user")
-    private List<Event> events;
+//    @OneToMany(mappedBy="user")
+//    private List<Event> events;
 
     @Column(name = "on_off")
     // on/off send event
