@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Table(name = "users")
@@ -17,20 +18,37 @@ public class User {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
-    private String name;
+    // Telegram username like Choonsky (used in Telegram as @Choonsky)
+    @Column(name = "user_name")
+    private String userName;
 
-    //@Column(name = "time_zone", columnDefinition = "default 0")
-    @Column(name = "time_zone")
-    //sets the broadcast time of events for your time zone
-    private int timeZone;
+    // Telegram extended username like Stanislav "Choonsky" Nemirovsky
+    @Column(name = "user_name_ext")
+    private String userNameExt;
 
-//    @OneToMany(mappedBy="user")
-//    private List<Event> events;
+    // Entered username
+    @Column(name = "user_name_entered")
+    private String userNameEntered;
 
-    @Column(name = "on_off")
-    // on/off send event
-    private boolean on;
+    @Column(name = "lang")
+    private Locale lang;
+
+    // Status: current type of search
+    @Column(name = "status")
+    private Status status;
+
+    // Status: current page
+    @Column(name = "page")
+    private Page page;
+
+    @Column(name = "country")
+    private Country country;
+
+    @Column(name = "region")
+    private Region region;
+
+    @Column(name = "phone")
+    private String phone;
 
     public User() {
     }

@@ -13,7 +13,7 @@ public class MessageHandler {
         long chatId = message.getChatId();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(chatId));
-        sendMessage.setText("отправили текст");
+        sendMessage.setText("Какой-то ответный текст");
         return sendMessage;
     }
 }
