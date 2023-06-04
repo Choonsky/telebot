@@ -12,7 +12,7 @@ import java.util.Map;
 @Setter
 @Getter
 //Used to save state bot.
-public class BotStateCache {
+public class UserCache {
     private final Map<Long, BotState> botStateMap = new HashMap<>();
 
     public void saveBotState(long userId, BotState botState) {

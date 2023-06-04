@@ -6,11 +6,16 @@ import com.nemirovsky.telebot.model.Event;
 import com.nemirovsky.telebot.telegram.BotState;
 import com.nemirovsky.telebot.model.EventFreq;
 import com.nemirovsky.telebot.service.MenuService;
+import com.nemirovsky.telebot.telegram.Dictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
+import static java.lang.Math.toIntExact;
 
 @Component
 //processes incoming callback's
@@ -31,7 +36,57 @@ public class CallbackQueryHandler {
     public BotApiMethod<?> processCallbackQuery(CallbackQuery buttonQuery) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final long userId = buttonQuery.getFrom().getId();
+        final long messageId = buttonQuery.getMessage().getMessageId();
 
+        String buttonData = buttonQuery.getData();
+        String text = buttonQuery.getMessage().getText();
+
+        InlineKeyboardButton lostButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_LOST.map.get(lang))
+                .callbackData("lost")
+                .build();
+
+        InlineKeyboardButton foundButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_FOUND.map.get(lang))
+                .callbackData("found")
+                .build();
+
+        InlineKeyboardButton infoButton = InlineKeyboardButton.builder()
+                .text(Dictionary.BUTTON_INFO.map.get(lang))
+                .url("https://telebot.lostfoundpaw.com/info.html")
+                .build();
+
+        KeyboardButton langButton = KeyboardButton.builder()
+                .text(lang)
+                .build();
+
+        KeyboardButton helpButton = KeyboardButton.builder()
+                .text("?")
+                .build();
+
+        InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
+                .keyboardRow(List.of(lostButton, foundButton))
+                .keyboardRow(List.of(infoButton))
+                .build();
+
+        KeyboardRow row = new KeyboardRow();
+        row.add(langButton);
+        row.add(helpButton);
+
+        ReplyKeyboardMarkup keyboardMarkup = ReplyKeyboardMarkup.builder()
+                .keyboardRow(row)
+                .build();
+
+
+        return EditMessageText.builder()
+                .chatId(chatId)
+                .messageId(toIntExact(messageId))
+                .parseMode("HTML")
+                .text(text + "\n\n Вы нажали <b>" + buttonData + "</b>!")
+                .replyMarkup(keyboard)
+                .build();
+
+        /*
         BotApiMethod<?> callBackAnswer = null;
 
         String data = buttonQuery.getData();
@@ -127,5 +182,7 @@ public class CallbackQueryHandler {
                 }
         }
         return callBackAnswer;
+
+         */
     }
 }

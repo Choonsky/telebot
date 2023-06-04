@@ -1,7 +1,7 @@
 package com.nemirovsky.telebot.config;
 
 
-import com.nemirovsky.telebot.botconfig.TelegramBotConfig;
+import com.nemirovsky.telebot.config.TelegramBotConfig;
 import com.nemirovsky.telebot.telegram.TelegramBot;
 import com.nemirovsky.telebot.telegram.handler.CallbackQueryHandler;
 import com.nemirovsky.telebot.telegram.handler.MessageHandler;

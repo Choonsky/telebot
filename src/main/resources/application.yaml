@@ -29,3 +29,4 @@ telegram:
   botName: LostFoundPawBot
   botToken: 6063479500:AAHLXRt211ypd74OnrR_64daPmuBvD-4YZQ # LostFoundPaw
   webHookPath: https://telebot.lostfoundpaw.com
+  adminId: 12345

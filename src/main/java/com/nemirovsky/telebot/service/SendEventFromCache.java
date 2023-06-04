@@ -20,7 +20,7 @@ public class SendEventFromCache {
     private final EventCacheDAO eventCacheDAO;
     private final TelegramBot telegramBot;
 
-    @Value("${telegrambot.adminId}")
+    @Value("${telegram.adminId}")
     private int admin_id;
 
     @Autowired
